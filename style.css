@@ -1,0 +1,328 @@
+/* ==========================================================
+   AVENMARK ACCOUNTS — STYLE SYSTEM V1
+========================================================== */
+
+
+/* ==========================================================
+   GLOBAL RESET
+========================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    min-height: 100vh;
+    background-color: #F5F5F2;
+    color: #2F2F2F;
+    font-family: "Montserrat", Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.main-header {
+
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 24px 50px;
+
+    border-bottom: 1px solid rgba(47, 47, 47, 0.12);
+
+}
+
+
+.brand {
+
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+}
+
+
+.logo {
+
+    width: 55px;
+    height: 55px;
+
+    object-fit: contain;
+
+}
+
+
+.brand h1 {
+
+    font-size: 22px;
+    letter-spacing: 1px;
+    font-weight: 700;
+
+}
+
+
+/* ==========================================================
+   HEADER BUTTONS
+========================================================== */
+
+.header-actions {
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+}
+
+
+.nav-button {
+
+    padding: 10px 22px;
+
+    border-radius: 999px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: 0.25s ease;
+
+}
+
+
+.nav-button:hover {
+
+    transform: translateY(-2px);
+
+}
+
+
+/* ==========================================================
+   BUTTON SYSTEM
+========================================================== */
+
+.button {
+
+    display: inline-flex;
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 15px 35px;
+
+    border-radius: 999px;
+
+    font-weight: 600;
+
+    transition: 0.25s ease;
+
+}
+
+
+.button:hover {
+
+    transform: translateY(-3px);
+
+}
+
+
+/* Copper */
+
+.primary {
+
+    background-color: #C47A45;
+    color: #F5F5F2;
+
+}
+
+
+/* Outline */
+
+.secondary {
+
+    border: 1px solid #2F2F2F;
+    color: #2F2F2F;
+
+}
+
+
+.secondary:hover {
+
+    border-color: #C47A45;
+    color: #C47A45;
+
+}
+
+
+/* ==========================================================
+   HERO SECTION
+========================================================== */
+
+.hero {
+
+    flex: 1;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    padding: 80px 25px;
+
+}
+
+
+.hero-content {
+
+    max-width: 800px;
+
+}
+
+
+.hero h2 {
+
+    font-size: clamp(42px, 6vw, 72px);
+
+    line-height: 1.1;
+
+    letter-spacing: -1px;
+
+    margin-bottom: 25px;
+
+}
+
+
+.hero p {
+
+    font-size: clamp(18px, 2vw, 24px);
+
+    opacity: 0.75;
+
+    margin-bottom: 45px;
+
+}
+
+
+/* ==========================================================
+   HERO BUTTONS
+========================================================== */
+
+.hero-buttons {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 18px;
+
+    flex-wrap: wrap;
+
+}
+
+
+/* ==========================================================
+   FOOTER
+========================================================== */
+
+.footer {
+
+    text-align: center;
+
+    padding: 30px 20px;
+
+    border-top: 1px solid rgba(47,47,47,0.12);
+
+    font-size: 14px;
+
+    opacity: 0.75;
+
+}
+
+
+.footer p:first-child {
+
+    font-weight: 700;
+
+    margin-bottom: 5px;
+
+}
+
+
+/* ==========================================================
+   MOBILE DESIGN
+========================================================== */
+
+@media (max-width: 700px) {
+
+
+    .main-header {
+
+        flex-direction: column;
+
+        gap: 20px;
+
+        padding: 25px;
+
+    }
+
+
+    .brand h1 {
+
+        font-size: 18px;
+
+    }
+
+
+    .header-actions {
+
+        width: 100%;
+
+        justify-content: center;
+
+    }
+
+
+    .hero {
+
+        padding: 50px 20px;
+
+    }
+
+
+    .hero-buttons {
+
+        flex-direction: column;
+
+        align-items: center;
+
+    }
+
+
+    .button {
+
+        width: 250px;
+
+    }
+
+}
