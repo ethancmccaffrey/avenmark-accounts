@@ -55,7 +55,6 @@ usernameInput.addEventListener("input", async () => {
             "Username must be at least 3 characters.";
 
         updateButton();
-
         return;
 
     }
@@ -194,7 +193,7 @@ signupForm.addEventListener("submit", async (event) => {
     try {
 
 
-        const { error } = await supabaseClient.auth.signUp({
+        const { data, error } = await supabaseClient.auth.signUp({
 
             email,
 
@@ -221,23 +220,10 @@ signupForm.addEventListener("submit", async (event) => {
 
         if (error) {
 
-
             console.error("Signup Error:", error);
 
-
-            if (error.message.includes("already registered")) {
-
-                signupMessage.textContent =
-                    "An account with this email already exists.";
-
-
-            } else {
-
-                signupMessage.textContent =
-                    "Unable to create your Avenmark Account. Please try again.";
-
-            }
-
+            signupMessage.textContent =
+                error.message || "Signup failed.";
 
             signupButton.disabled = false;
 
@@ -250,10 +236,12 @@ signupForm.addEventListener("submit", async (event) => {
         signupContainer.style.display = "none";
 
 
-        verificationEmail.textContent = email;
+        verificationEmail.textContent =
+            email;
 
 
-        verificationScreen.style.display = "block";
+        verificationScreen.style.display =
+            "block";
 
 
 
@@ -264,7 +252,7 @@ signupForm.addEventListener("submit", async (event) => {
 
 
         signupMessage.textContent =
-            "Something went wrong. Please try again.";
+            error.message || "Something went wrong.";
 
 
         signupButton.disabled = false;
