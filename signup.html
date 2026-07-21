@@ -39,82 +39,155 @@
 
     </nav>
 
-
 </header>
 
 
 
 <main class="hero">
 
-
 <section class="hero-content">
 
 
-    <h2>
-        Create your Avenmark Account.
-    </h2>
+    <div id="signup-container">
 
 
-    <p>
-        One account. Every Avenmark experience.
-    </p>
+        <h2>
+            Create your Avenmark Account.
+        </h2>
+
+
+        <p>
+            One account. Every Avenmark experience.
+        </p>
 
 
 
-    <form id="signup-form" class="account-form">
+        <form id="signup-form" class="account-form">
 
 
-        <input 
-            type="text"
-            id="display-name"
-            placeholder="Display Name"
-            required
-        >
+            <div class="input-group">
+
+                <input 
+                    type="text"
+                    id="display-name"
+                    placeholder="Display Name"
+                    autocomplete="name"
+                    required
+                >
+
+                <small id="display-name-status"></small>
+
+            </div>
 
 
-        <input 
-            type="text"
-            id="username"
-            placeholder="Username"
-            required
-        >
+
+            <div class="input-group">
+
+                <input 
+                    type="text"
+                    id="username"
+                    placeholder="Username"
+                    autocomplete="username"
+                    required
+                >
+
+                <small id="username-status"></small>
+
+            </div>
 
 
-        <input 
-            type="email"
-            id="email"
-            placeholder="Email"
-            required
-        >
+
+            <div class="input-group">
+
+                <input 
+                    type="email"
+                    id="email"
+                    placeholder="Email"
+                    autocomplete="email"
+                    required
+                >
+
+                <small id="email-status"></small>
+
+            </div>
 
 
-        <input 
-            type="password"
-            id="password"
-            placeholder="Password"
-            required
-        >
 
+            <div class="input-group">
+
+                <input 
+                    type="password"
+                    id="password"
+                    placeholder="Password"
+                    autocomplete="new-password"
+                    required
+                >
+
+                <small id="password-status"></small>
+
+            </div>
+
+
+
+            <button 
+                type="submit"
+                id="signup-button"
+                class="button primary"
+                disabled
+            >
+                Create Account
+            </button>
+
+
+        </form>
+
+
+        <p id="signup-message"></p>
+
+
+    </div>
+
+
+
+
+
+    <div id="verification-screen" style="display:none;">
+
+
+        <h2>
+            Check your email.
+        </h2>
+
+
+        <p>
+            We sent a verification link to:
+        </p>
+
+
+        <p id="verification-email"></p>
+
+
+        <p>
+            Click the link in your email to activate your Avenmark Account.
+        </p>
 
 
         <button 
-            type="submit"
-            class="button primary"
+            id="resend-email"
+            class="button secondary"
         >
-            Create Account
+            Resend Email
         </button>
 
 
-    </form>
+    </div>
 
-
-    <p id="signup-message"></p>
 
 
 </section>
 
-
 </main>
+
 
 
 
@@ -129,6 +202,7 @@
     </p>
 
 </footer>
+
 
 
 
