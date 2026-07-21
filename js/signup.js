@@ -48,6 +48,7 @@ usernameInput.addEventListener("input", async () => {
 
     usernameAvailable = false;
 
+
     if (username.length < 3) {
 
         usernameStatus.textContent =
@@ -56,6 +57,7 @@ usernameInput.addEventListener("input", async () => {
         updateButton();
 
         return;
+
     }
 
 
@@ -72,12 +74,15 @@ usernameInput.addEventListener("input", async () => {
 
     if (error) {
 
-        console.error(error);
+        console.error("Username Check Error:", error);
 
         usernameStatus.textContent =
             "";
 
+        updateButton();
+
         return;
+
     }
 
 
@@ -87,6 +92,7 @@ usernameInput.addEventListener("input", async () => {
             "✕ Username already taken.";
 
         usernameAvailable = false;
+
 
     } else {
 
@@ -116,6 +122,7 @@ passwordInput.addEventListener("input", () => {
 
         passwordValid = true;
 
+
     } else {
 
         passwordStatus.textContent =
@@ -134,7 +141,7 @@ passwordInput.addEventListener("input", () => {
 
 emailInput.addEventListener("input", () => {
 
-    const email = emailInput.value;
+    const email = emailInput.value.trim();
 
 
     if (email.includes("@") && email.includes(".")) {
@@ -143,6 +150,7 @@ emailInput.addEventListener("input", () => {
             "✓ Email looks valid.";
 
         emailValid = true;
+
 
     } else {
 
@@ -179,6 +187,9 @@ signupForm.addEventListener("submit", async (event) => {
         "Creating your Avenmark Account...";
 
 
+    signupButton.disabled = true;
+
+
 
     try {
 
@@ -190,6 +201,9 @@ signupForm.addEventListener("submit", async (event) => {
             password,
 
             options: {
+
+                emailRedirectTo:
+                    "https://avenmark-accounts.vercel.app/verified.html",
 
                 data: {
 
@@ -208,7 +222,7 @@ signupForm.addEventListener("submit", async (event) => {
         if (error) {
 
 
-            console.error(error);
+            console.error("Signup Error:", error);
 
 
             if (error.message.includes("already registered")) {
@@ -216,18 +230,20 @@ signupForm.addEventListener("submit", async (event) => {
                 signupMessage.textContent =
                     "An account with this email already exists.";
 
+
             } else {
 
                 signupMessage.textContent =
-                    error.message;
+                    "Unable to create your Avenmark Account. Please try again.";
 
             }
 
 
+            signupButton.disabled = false;
+
             return;
 
         }
-
 
 
 
@@ -240,14 +256,18 @@ signupForm.addEventListener("submit", async (event) => {
         verificationScreen.style.display = "block";
 
 
+
     } catch (error) {
 
 
-        console.error(error);
+        console.error("Unexpected Signup Error:", error);
 
 
         signupMessage.textContent =
             "Something went wrong. Please try again.";
+
+
+        signupButton.disabled = false;
 
     }
 
