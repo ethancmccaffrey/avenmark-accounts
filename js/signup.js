@@ -1,78 +1,255 @@
 const signupForm = document.getElementById("signup-form");
+
 const signupMessage = document.getElementById("signup-message");
 
+const signupButton = document.getElementById("signup-button");
+
+const signupContainer = document.getElementById("signup-container");
+
+const verificationScreen = document.getElementById("verification-screen");
+
+const verificationEmail = document.getElementById("verification-email");
+
+const usernameStatus = document.getElementById("username-status");
+
+const passwordStatus = document.getElementById("password-status");
+
+const emailStatus = document.getElementById("email-status");
+
+
+const displayNameInput = document.getElementById("display-name");
+const usernameInput = document.getElementById("username");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+
+
+let usernameAvailable = false;
+let passwordValid = false;
+let emailValid = false;
+
+
+
+function updateButton() {
+
+    signupButton.disabled = !(
+        usernameAvailable &&
+        passwordValid &&
+        emailValid &&
+        displayNameInput.value.trim() !== ""
+    );
+
+}
+
+
+
+usernameInput.addEventListener("input", async () => {
+
+    const username = usernameInput.value.trim();
+
+    usernameAvailable = false;
+
+    if (username.length < 3) {
+
+        usernameStatus.textContent =
+            "Username must be at least 3 characters.";
+
+        updateButton();
+
+        return;
+    }
+
+
+    usernameStatus.textContent =
+        "Checking username...";
+
+
+    const { data, error } = await supabaseClient
+        .from("profiles")
+        .select("username")
+        .eq("username", username)
+        .maybeSingle();
+
+
+    if (error) {
+
+        console.error(error);
+
+        usernameStatus.textContent =
+            "";
+
+        return;
+    }
+
+
+    if (data) {
+
+        usernameStatus.textContent =
+            "✕ Username already taken.";
+
+        usernameAvailable = false;
+
+    } else {
+
+        usernameStatus.textContent =
+            "✓ Username available.";
+
+        usernameAvailable = true;
+
+    }
+
+
+    updateButton();
+
+});
+
+
+
+passwordInput.addEventListener("input", () => {
+
+    const password = passwordInput.value;
+
+
+    if (password.length >= 8) {
+
+        passwordStatus.textContent =
+            "✓ Password meets requirements.";
+
+        passwordValid = true;
+
+    } else {
+
+        passwordStatus.textContent =
+            "Password must be at least 8 characters.";
+
+        passwordValid = false;
+
+    }
+
+
+    updateButton();
+
+});
+
+
+
+emailInput.addEventListener("input", () => {
+
+    const email = emailInput.value;
+
+
+    if (email.includes("@") && email.includes(".")) {
+
+        emailStatus.textContent =
+            "✓ Email looks valid.";
+
+        emailValid = true;
+
+    } else {
+
+        emailStatus.textContent =
+            "Enter a valid email address.";
+
+        emailValid = false;
+
+    }
+
+
+    updateButton();
+
+});
+
+
+
 signupForm.addEventListener("submit", async (event) => {
+
     event.preventDefault();
 
-    const displayName = document.getElementById("display-name").value.trim();
-    const username = document.getElementById("username").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
 
-    signupMessage.textContent = "Creating your Avenmark Account...";
+    const displayName = displayNameInput.value.trim();
+
+    const username = usernameInput.value.trim();
+
+    const email = emailInput.value.trim();
+
+    const password = passwordInput.value;
+
+
+
+    signupMessage.textContent =
+        "Creating your Avenmark Account...";
+
+
 
     try {
 
-        // Check username availability
-        const { data: usernameCheck, error: usernameError } = await supabaseClient
-            .from("profiles")
-            .select("username")
-            .eq("username", username)
-            .maybeSingle();
 
-        if (usernameError) {
-            console.error("Username Check Error:", usernameError);
-        }
-
-        if (usernameCheck) {
-            signupMessage.textContent =
-                "That username is already taken. Please choose another.";
-            return;
-        }
-
-
-        // Create authentication account
         const { error } = await supabaseClient.auth.signUp({
+
             email,
+
             password,
+
             options: {
+
                 data: {
+
                     display_name: displayName,
+
                     username: username
+
                 }
+
             }
+
         });
 
 
-        if (error) {
-            console.error("Signup Error:", error);
 
-            if (error.message.includes("Password")) {
-                signupMessage.textContent = error.message;
-            } 
-            else if (error.message.includes("already registered")) {
+        if (error) {
+
+
+            console.error(error);
+
+
+            if (error.message.includes("already registered")) {
+
                 signupMessage.textContent =
                     "An account with this email already exists.";
-            } 
-            else {
+
+            } else {
+
                 signupMessage.textContent =
-                    "Unable to create your account. Please try again.";
+                    error.message;
+
             }
 
+
             return;
+
         }
 
 
-        signupMessage.textContent =
-            "Account created! Please check your email to verify your account.";
+
+
+        signupContainer.style.display = "none";
+
+
+        verificationEmail.textContent = email;
+
+
+        verificationScreen.style.display = "block";
 
 
     } catch (error) {
 
-        console.error("Unexpected Signup Error:", error);
+
+        console.error(error);
+
 
         signupMessage.textContent =
             "Something went wrong. Please try again.";
 
     }
+
+
 });
