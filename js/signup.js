@@ -11,22 +11,49 @@ signupForm.addEventListener("submit", async (event) => {
 
     signupMessage.textContent = "Creating your Avenmark Account...";
 
-    const { error } = await supabaseClient.auth.signUp({
-        email,
-        password,
-        options: {
-            data: {
-                display_name: displayName,
-                username: username
+    try {
+        const { data, error } = await supabaseClient.auth.signUp({
+            email,
+            password,
+            options: {
+                data: {
+                    display_name: displayName,
+                    username: username
+                }
             }
+        });
+
+        if (error) {
+            console.error("Signup Error:", error);
+
+            const errorText = JSON.stringify(error);
+
+            if (
+                errorText.includes("username") ||
+                errorText.includes("profiles") ||
+                errorText.includes("duplicate")
+            ) {
+                signupMessage.textContent =
+                    "That username is already taken. Please choose another.";
+            } 
+            else if (error.message) {
+                signupMessage.textContent = error.message;
+            } 
+            else {
+                signupMessage.textContent =
+                    "Something went wrong creating your account.";
+            }
+
+            return;
         }
-    });
 
-    if (error) {
-        signupMessage.textContent = error.message;
-        return;
+        signupMessage.textContent =
+            "Account created! Please check your email to verify your account.";
+
+    } catch (error) {
+        console.error("Unexpected Signup Error:", error);
+
+        signupMessage.textContent =
+            "Something went wrong. Please try again.";
     }
-
-    signupMessage.textContent =
-        "Account created! Please check your email to verify your account.";
 });
